@@ -79,20 +79,23 @@
             %>
             <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
                 <% for (Template template : templates) {%>
-                <div>
+                <div class="row">
                     <h4><%= template.getFieldName() %></h4>
-                    <div class="form-group">
-                        <label for="current-<%= template.getId() %>" class="control-label">本期实际</label>
-                        <input type="text" class="form-control" id="current-<%= template.getId() %>" name="inputEmail1" placeholder="本期实际">
+                    <div style="margin-left: 4rem;">
+                        <div class="form-group">
+                            <label for="current-<%= template.getId() %>" class="control-label">本期实际</label>
+                            <input type="text" class="form-control" id="current-<%= template.getId() %>" name="inputEmail1" placeholder="本期实际">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-<%= template.getId() %>" class="control-label">去年同期</label>
+                            <input type="text" class="form-control" id="last-<%= template.getId() %>" name="inputEmail2" placeholder="去年同期">
+                        </div>
+                        <div class="form-group">
+                            <label for="yearonyear-<%= template.getId() %>" class="control-label">同比</label>
+                            <input type="text" class="form-control" id="yearonyear-<%= template.getId() %>" name="yearonyear-<%= template.getId() %>" placeholder="同比">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="last-<%= template.getId() %>" class="control-label">去年同期</label>
-                        <input type="text" class="form-control" id="last-<%= template.getId() %>" name="inputEmail2" placeholder="去年同期">
-                    </div>
-                    <div class="form-group">
-                        <label for="yearonyear-<%= template.getId() %>" class="control-label">同比</label>
-                        <input type="text" class="form-control" id="yearonyear-<%= template.getId() %>" name="yearonyear-<%= template.getId() %>" placeholder="同比">
-                    </div>
+
                 </div>
                 <% } %>
                 <div class="form-group">

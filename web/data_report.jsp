@@ -1,6 +1,4 @@
-<%@ page import="report.proxy.DataProxy" %>
-<%@ page import="java.util.List" %>
-<%@ page import="report.models.Data" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -64,7 +62,7 @@
                     </ul>
                 </li>
                 <% } else { %>
-                <li><a href="${pageContext.request.contextPath}/login.jsp">登录</a></li>
+                <li><a href="${pageContext.request.contextPath}/servlet/LoginServlet">登录</a></li>
                 <% } %>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -74,54 +72,7 @@
 <div class="container">
     <div class="row">
         <div class="main">
-            <h3>数据列表</h3>
-            <div class="dropdown menu" style="margin-bottom: 10px;">
-                <button id="btnDate" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="btnDate">
-                    <%
-                        DataProxy dataProxy = new DataProxy();
-                        List<String> dateList = dataProxy.getDateList();
-                        for (String string : dateList) {
-                    %>
-                    <li><a href="data.jsp?date=<%= string %>"><%= string %></a></li>
-                    <% } %>
-                </ul>
-                <a class="btn btn-default" href="/data_new.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>" target="_blank">录入数据</a>
-                <a class="btn btn-success" href="/data_report.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>" target="_blank">生成本月报表</a>
-            </div>
-            <%
-                List<Data> dataList = dataProxy.getDataListByDate(request.getParameter("date") == null ? "2017-12" : request.getParameter("date"));
-            %>
-            <table class="table">
-                <thead>
-                <tr>
-                    <td>id</td>
-                    <td>片区</td>
-                    <td>指标名称</td>
-                    <td>单位</td>
-                    <td>本期实际</td>
-                    <td>去年同期</td>
-                    <td>同比%</td>
-                    <td>操作</td>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (Data data : dataList) {%>
-                    <tr>
-                        <td><%= data.getId() %></td>
-                        <td><%= data.getArea() %></td>
-                        <td><%= data.getFieldName() %></td>
-                        <td><%= data.getUnit() %></td>
-                        <td><%= data.getCurrent() %></td>
-                        <td><%= data.getLastYear() %></td>
-                        <td><%= data.getYearonyear() %></td>
-                        <td><a href="/data_edit.jsp?id=<%= data.getId() %>" class="btn btn-primary">编辑</a></td>
-                    </tr>
-                <% } %>
-                </tbody>
-            </table>
+
         </div>
     </div>
 </div>

@@ -45,6 +45,30 @@ public class DataProxy extends BaseProxy {
     }
 
     /**
+     * 临时获取一个日期列表
+     * @return 日期列表
+     */
+    public List<String> getDateList() {
+        List<String> result = new ArrayList<String>();
+        for (int i = 12; i > 1; i--) {
+            result.add("2017-" + Integer.toString(i));
+        }
+        return result;
+    }
+
+    /**
+     * 获取片区列表
+     * @return 片区列表
+     */
+    public List<String> getAreaList() {
+        List<String> result = new ArrayList<String>();
+        result.add("A");
+        result.add("B");
+        result.add("C");
+        return result;
+    }
+
+    /**
      * 获取报表的列表
      * @param date 年月，如“2017-10”
      * @return 所有的记录
@@ -61,6 +85,46 @@ public class DataProxy extends BaseProxy {
 //                "ON `data`.template = `template`.id " +
 //                "ORDER BY `template`.sort ASC";
         ResultSet rs = DB.executeQuery(sql, new Object[]{date});
+        List<Data> result = new ArrayList<Data>();
+        while (rs.next()) {
+            Data data = new Data();
+            data.setId(rs.getInt(date));
+            data.setTemplate(rs.getInt("template"));
+            data.setFieldName(rs.getString("field_name"));
+            data.setUnit(rs.getString("unit"));
+            data.setParent(rs.getInt("parent"));
+            data.setFormat(rs.getInt("format"));
+            data.setArea(rs.getString("area"));
+            data.setCurrent(rs.getDouble("current"));
+            data.setLastYear(rs.getDouble("last_year"));
+            data.setYearonyear(rs.getDouble("year-on-year"));
+            data.setDate(rs.getString("date"));
+            result.add(data);
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 获取片区报表的列表
+     * @param date 年月，如“2017-10”
+     * @param area 片区，如“A”
+     * @return 所有的记录
+     * @throws SQLException SQL异常
+     */
+    public List<Data> getDataListByDateAndArea(String date, String area) throws SQLException {
+        // 结果按照模板排序，data表有冗余
+        String sql = "SELECT * FROM `data` " +
+                "WHERE date = ? " +
+                "AND area = ? " +
+                "ORDER BY `sort` ASC";
+//        String sql = "SELECT `data`.* FROM `data` " +
+//                "WHERE date = ? " +
+//                "LEFT JOIN `template` " +
+//                "ON `data`.template = `template`.id " +
+//                "ORDER BY `template`.sort ASC";
+        ResultSet rs = DB.executeQuery(sql, new Object[]{date, area});
         List<Data> result = new ArrayList<Data>();
         while (rs.next()) {
             Data data = new Data();
