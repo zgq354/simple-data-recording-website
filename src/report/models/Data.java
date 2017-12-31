@@ -20,6 +20,7 @@ public class Data {
     private int template;
     private String field_name;
     private String unit;
+    private int parent;
     private int format;
     private String area;
     private double current;
@@ -44,11 +45,20 @@ public class Data {
         this.template = template;
     }
 
-    public String getField_name() {
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
+    public String getFieldName() {
         return field_name;
     }
 
-    public void setField_name(String field_name) {
+    public void setFieldName(String field_name) {
         this.field_name = field_name;
     }
 
@@ -84,11 +94,11 @@ public class Data {
         this.current = current;
     }
 
-    public double getLast_year() {
+    public double getLastYear() {
         return last_year;
     }
 
-    public void setLast_year(double last_year) {
+    public void setLastYear(double last_year) {
         this.last_year = last_year;
     }
 

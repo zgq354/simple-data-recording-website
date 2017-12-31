@@ -82,18 +82,34 @@ public class UserProxy extends BaseProxy {
      * @throws SQLException 抛出错误
      */
     public boolean updateUser(User user) throws SQLException {
-        String sql = "UPDATE `user` SET" +
-                "`username` = ?" +
-                "`password` = ?" +
-                "`email` = ?" +
-                "`role` = ?" +
-                "`area` = ?";
+        String sql = "UPDATE `user` " +
+                "SET" +
+                "`username` = ? ," +
+                "`password` = ? ," +
+                "`email` = ? ," +
+                "`role` = ? ," +
+                "`area` = ? " +
+                "WHERE `id` = ?";
         return DB.executeUpdate(sql, new Object[]{
                 user.getUsername(),
                 user.getPassword(),
+                user.getEmail(),
                 user.getRole(),
                 user.getArea(),
-                String.valueOf(System.currentTimeMillis() / 1000) // 时间戳
+                user.getId()
+        });
+    }
+
+    /**
+     * 删除用户
+     * @param id 要删除的用户id
+     * @return 返回执行状态
+     * @throws SQLException SQL错误
+     */
+    public boolean deleteUserById(String id) throws SQLException {
+        String sql = "DELETE FROM `user` WHERE `id` = ?";
+        return DB.executeUpdate(sql, new Object[]{
+                id
         });
     }
 }
