@@ -39,7 +39,7 @@ public class UserProxy extends BaseProxy {
      * @param email 要查询的UID
      */
     public User getUserByEmail(String email) throws Exception {
-        String sql = "SELECT * FROM `user` WHERE id=?";
+        String sql = "SELECT * FROM `user` WHERE email=?";
         ResultSet rs = DB.executeQuery(sql, new Object[]{email});
         if (rs.next()) {
             User result = new User();

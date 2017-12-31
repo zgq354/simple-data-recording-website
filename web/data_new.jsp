@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">数据 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">模板</a></li>
+                <li><a href="#">指标</a></li>
                 <li><a href="#">用户</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->

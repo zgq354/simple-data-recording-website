@@ -1,17 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
   User: qing
-  Date: 17-12-30
-  Time: 下午5:51
+  Date: 18-1-1
+  Time: 上午12:57
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="java.util.List" %>
+<%@ page import="report.proxy.TemplateProxy" %>
+<%@ page import="report.models.Template" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>数据报表 - 数据统计系统</title>
+    <title>数据模板 - 数据统计系统</title>
     <link rel="stylesheet" href="/vendor/bootstrap-3.3.7/css/bootstrap.min.css">
     <style>
         body {
@@ -47,7 +50,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
-                <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
                 <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -55,7 +58,7 @@
                 <li><a href="#">用户组：<%= session.getAttribute("role") %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <%= session.getAttribute("username") %> <span class="caret"></span>
+                         <%= session.getAttribute("username") %> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="${pageContext.request.contextPath}/servlet/LogoutServlet">退出登录</a></li>
@@ -72,13 +75,55 @@
 <div class="container">
     <div class="row">
         <div class="main">
-
+            <h3>指标列表</h3>
+            <%
+                List<String> StringList = (List<String>) session.getAttribute("info");
+                if (StringList != null) {
+                    for (String std : StringList) {
+            %>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="tdue">&times;</span></button>
+                <%= std %>
+            </div>
+            <%
+                    }
+                }
+            %>
+            <%
+                // 获取所有的条目列表
+                TemplateProxy templateProxy = new TemplateProxy();
+                List<Template> templates = templateProxy.getTemplatesList();
+            %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>id</td>
+                        <td>指标名称</td>
+                        <td>单位</td>
+                        <td>父级指标</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for (Template template : templates) {%>
+                    <tr>
+                        <td><%= template.getId() %></td>
+                        <td><%= template.getFieldName() %></td>
+                        <td><%= template.getUnit() %></td>
+                        <td><%= template.getParent() %></td>
+                        <td><a href="#" class="btn btn-primary">编辑</a> <a href="#" class="btn btn-danger">删除</a></td>
+                    </tr>
+                </tbody>
+                <% } %>
+            </table>
+            <a href="#" class="btn btn-primary">增加指标</a>
         </div>
     </div>
 </div>
 <div class="footer-bottom">
     <div class="container">
-        <p class="text-mute text-center">Made with <span><i class="glyphicon glyphicon-heart"></i></span> by Group</p>
+        <p class="text-mute text-center">Made with <span><i class="glyphicon glyphicon-heart"></i></span>
+            by Group</p>
     </div>
 </div>
 </body>

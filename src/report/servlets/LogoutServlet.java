@@ -24,6 +24,8 @@ public class LogoutServlet extends HttpServlet {
         if (request.getSession().getAttribute("uid") != null) {
             request.getSession().removeAttribute("uid");
             request.getSession().removeAttribute("role");
+            request.getSession().removeAttribute("username");
+
             info.add("账户登出成功！");
         }
 

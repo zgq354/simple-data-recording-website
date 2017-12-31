@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             // 正则表达式验证邮箱是否符合格式
-            if (!Pattern.matches("", email) || password.length() < 6 || password.length() > 16) {
+            if (!Pattern.matches("^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$", email) || password.length() < 6 || password.length() > 16) {
                 // 返回邮箱或密码格式不正确
                 throw new TipException("邮箱或密码格式不正确");
             }
@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
             // 验证成功，写入Session
             // TODO: 设置Session过期时间
             request.getSession().setAttribute("uid", result.getId());
+            request.getSession().setAttribute("username", result.getUsername());
             request.getSession().setAttribute("role", result.getRole());
 
             // 登陆成功后的跳转
