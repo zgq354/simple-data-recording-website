@@ -53,7 +53,9 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("username", result.getUsername());
             request.getSession().setAttribute("role", result.getRole());
 
-            // 登陆成功后的跳转
+            // 登陆成功后的提示与跳转
+            info.add("欢迎回来，" + result.getUsername());
+            request.getSession().setAttribute("info", info);
             response.sendRedirect("/data.jsp");
             return;
         } catch (TipException e) {

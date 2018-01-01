@@ -75,6 +75,21 @@
   <%--结束导航条--%>
   <div class="docs-header" id="content">
       <div class="container">
+          <%-- 全局消息提示 --%>
+          <%
+              List<String> stringList = (List<String>) session.getAttribute("info");
+              if (stringList != null) {
+                  for (String str : stringList) {
+          %>
+          <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= str %>
+          </div>
+          <%
+                  }
+              }
+          %>
+          <%-- End 全局消息提示 --%>
           <h1>欢迎来到企业数据统计报送系统</h1>
           <p style="font-size: 18px;">通过本系统可实现地区企业数据的快速报送</p>
       </div>

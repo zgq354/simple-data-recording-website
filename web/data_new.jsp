@@ -10,9 +10,14 @@
 <%@ page import="report.models.Template" %>
 <%@ page import="report.proxy.DataProxy" %>
 <%@ page import="report.util.Util" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("uid") == null) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您还没有登录或会话已过期，请登录后再试。");
+        session.setAttribute("info", info);
         response.sendRedirect("/login.jsp");
         return;
     }
@@ -84,6 +89,7 @@
     <div class="row">
         <div class="main">
             <h3>录入数据</h3>
+            <%-- 全局消息提示 --%>
             <%
                 List<String> stringList = (List<String>) session.getAttribute("info");
                 if (stringList != null) {
@@ -97,6 +103,7 @@
                     }
                 }
             %>
+            <%-- End 全局消息提示 --%>
             <form method="post" action="${pageContext.request.contextPath}/servlet/DataAddServlet">
                 <div class="form-group">
                     <%--@declare id="date"--%><label for="date" class="control-label">录入数据的月份</label>

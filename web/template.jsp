@@ -9,9 +9,14 @@
 <%@ page import="report.proxy.TemplateProxy" %>
 <%@ page import="report.models.Template" %>
 <%@ page import="report.util.Util" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("uid") == null) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您还没有登录或会话已过期，请登录后再试。");
+        session.setAttribute("info", info);
         response.sendRedirect("/login.jsp");
         return;
     }
@@ -83,19 +88,21 @@
     <div class="row">
         <div class="main">
             <h3>指标列表</h3>
+            <%-- 全局消息提示 --%>
             <%
-                List<String> StringList = (List<String>) session.getAttribute("info");
-                if (StringList != null) {
-                    for (String std : StringList) {
+                List<String> stringList = (List<String>) session.getAttribute("info");
+                if (stringList != null) {
+                    for (String str : stringList) {
             %>
             <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="tdue">&times;</span></button>
-                <%= std %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= str %>
             </div>
             <%
                     }
                 }
             %>
+            <%-- End 全局消息提示 --%>
             <%
                 // 获取所有的条目列表
                 TemplateProxy templateProxy = new TemplateProxy();

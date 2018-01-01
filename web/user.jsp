@@ -1,7 +1,8 @@
 <%@ page import="report.proxy.UserProxy" %>
 <%@ page import="java.util.List" %>
 <%@ page import="report.models.User" %>
-<%@ page import="report.util.Util" %><%--
+<%@ page import="report.util.Util" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -11,6 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("uid") == null) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您还没有登录或会话已过期，请登录后再试。");
+        session.setAttribute("info", info);
         response.sendRedirect("/login.jsp");
         return;
     }
@@ -81,6 +86,22 @@
 <div class="container">
     <div class="row">
         <div class="main">
+            <%-- 全局消息提示 --%>
+            <%
+                List<String> stringList = (List<String>) session.getAttribute("info");
+                if (stringList != null) {
+                    for (String str : stringList) {
+            %>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= str %>
+            </div>
+            <%
+                    }
+                }
+            %>
+            <%-- End 全局消息提示 --%>
+
             <h3>用户列表</h3>
             <div style="margin-bottom: 10px">
                 <a class="btn btn-default" href="/user_add.jsp">添加用户</a>

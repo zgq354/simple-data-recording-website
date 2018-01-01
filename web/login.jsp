@@ -71,6 +71,7 @@
     </div>
 </div>
 </body>
+<script src="${pageContext.request.contextPath}/vendor/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendor/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </html>
-
 <% session.removeAttribute("info"); %>

@@ -1,7 +1,8 @@
 <%@ page import="report.proxy.TemplateProxy" %>
 <%@ page import="report.models.Template" %>
 <%@ page import="java.util.List" %>
-<%@ page import="report.util.Util" %><%--
+<%@ page import="report.util.Util" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -11,6 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("uid") == null) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您还没有登录或会话已过期，请登录后再试。");
+        session.setAttribute("info", info);
         response.sendRedirect("/login.jsp");
         return;
     }
@@ -82,6 +87,7 @@
     <div class="row">
         <div class="main">
             <h3>新建指标</h3>
+            <%-- 全局消息提示 --%>
             <%
                 List<String> stringList = (List<String>) session.getAttribute("info");
                 if (stringList != null) {
@@ -95,6 +101,8 @@
                     }
                 }
             %>
+            <%-- End 全局消息提示 --%>
+
             <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
                 <div class="form-group">
                     <label for="field_name" class="control-label">指标名称</label>
