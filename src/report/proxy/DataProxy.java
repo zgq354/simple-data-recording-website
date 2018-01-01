@@ -57,18 +57,6 @@ public class DataProxy extends BaseProxy {
     }
 
     /**
-     * 获取片区列表
-     * @return 片区列表
-     */
-    public List<String> getAreaList() {
-        List<String> result = new ArrayList<String>();
-        result.add("A");
-        result.add("B");
-        result.add("C");
-        return result;
-    }
-
-    /**
      * 获取报表的列表
      * @param date 年月，如“2017-10”
      * @return 所有的记录

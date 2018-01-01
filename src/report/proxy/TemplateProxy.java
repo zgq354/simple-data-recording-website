@@ -29,6 +29,7 @@ public class TemplateProxy extends BaseProxy {
             template.setId(Integer.parseInt(id));
             template.setParent(rs.getInt("parent"));
             template.setFormat(rs.getInt("format"));
+            template.setSort(rs.getInt("sort"));
             template.setFieldName(rs.getString("field_name"));
             template.setUnit(rs.getString("unit"));
             return template;
