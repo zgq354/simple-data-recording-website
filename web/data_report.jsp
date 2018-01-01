@@ -1,6 +1,10 @@
 <%@ page import="report.util.Util" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="report.models.Data" %>
+<%@ page import="java.util.List" %>
+<%@ page import="report.proxy.DataProxy" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="report.util.TableRow" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -58,7 +62,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
                 <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
                 <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
             </ul>
@@ -97,9 +101,70 @@
             <%
                     }
                 }
-            %>
-            <%-- End 全局消息提示 --%>
 
+                DataProxy dataProxy = new DataProxy();
+                List<Data> dataList = dataProxy.getDataListByDate(request.getParameter("date") == null ? "2017-12" : request.getParameter("date"));
+
+                // 通过一个三层 HashMap 实现列表的存储
+                // 另外两层 HashMap 封装在了 TableRow 类中
+                HashMap<Integer, TableRow> dataTable = new HashMap<>();
+                for (Data data : dataList) {
+                    // 先判断行是否存在，存在则插入某行的内容
+                    // 每行代表每个指标的所有数据
+                    TableRow row = dataTable.get(data.getTemplate());
+                    if (row == null) {
+                        row = new TableRow(data.getFieldName(), data.getUnit());
+                    }
+                    // 给行增加片区数据
+                    row.setArea(data.getArea(), data.getCurrent(), data.getLastYear(), data.getYearonyear());
+                    // 插入行
+                    dataTable.put(data.getTemplate(), row);
+                }
+            %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td rowspan="2">指标名称</td>
+                        <td rowspan="2">计量单位</td>
+                        <%
+                            List<String> areaList = Util.getAreaList();
+                            for (String area : areaList) {
+                        %>
+                        <td colspan="3"><%= area %></td>
+                        <%
+                            }
+                        %>
+                    </tr>
+                    <tr>
+                        <%-- 每个片区三个数据 --%>
+                        <%
+                            for (int i = 0; i < areaList.size(); i++) {
+                        %>
+                            <td>本期实际</td>
+                            <td>去年同期</td>
+                            <td>同比（%）</td>
+                        <%
+                            }
+                        %>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for (Integer key : dataTable.keySet()) {
+                    TableRow row = dataTable.get(key);
+                %>
+                    <tr>
+                        <td><%= row.getFieldName() %></td>
+                        <td><%= row.getUnit() %></td>
+                        <%-- 每组数据三个单元格 --%>
+                        <% for (String area : areaList) { %>
+                        <td><%= row.getCurrent(area) %></td>
+                        <td><%= row.getLast(area) %></td>
+                        <td><%= row.getYearOnYear(area) %></td>
+                        <% } %>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
