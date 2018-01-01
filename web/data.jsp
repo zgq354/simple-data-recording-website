@@ -25,7 +25,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>数据报表 - 数据统计系统</title>
+    <title>数据列表 - 数据统计系统</title>
     <link rel="stylesheet" href="/vendor/bootstrap-3.3.7/css/bootstrap.min.css">
     <style>
         body {

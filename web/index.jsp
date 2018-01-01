@@ -1,4 +1,5 @@
-<%@ page import="report.util.Util" %><%--
+<%@ page import="report.util.Util" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30

@@ -122,7 +122,7 @@
                     <%--@declare id="area"--%><label for="area" class="control-label">数据所属片区</label>
                     <select class="form-control" name="area">
                         <%
-                            List<String> areaList = dataProxy.getAreaList();
+                            List<String> areaList = Util.getAreaList();
                             for (String string : areaList) {
                         %>
                         <option><%= string %></option>
