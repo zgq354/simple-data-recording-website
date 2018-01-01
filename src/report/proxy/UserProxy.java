@@ -5,9 +5,11 @@ import report.models.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserProxy extends BaseProxy {
-    private DBHelperUtil DB = null;
+    private DBHelperUtil DB;
 
     public UserProxy() throws Exception {
         DB = getDBInstance();
@@ -53,6 +55,29 @@ public class UserProxy extends BaseProxy {
         }
 
         return null;
+    }
+
+    /**
+     * 获取用户列表
+     * @return 用户列表
+     * @throws SQLException SQL错误
+     */
+    public List<User> getUserList() throws SQLException {
+        String sql = "SELECT * FROM `user`";
+        ResultSet rs = DB.executeQuery(sql, new Object[]{});
+        List<User> result = new ArrayList<User>();
+        while (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
+            user.setRole(rs.getString("role"));
+            user.setArea(rs.getString("area"));
+            result.add(user);
+        }
+
+        return result;
     }
 
     /**

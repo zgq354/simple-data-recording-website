@@ -1,5 +1,7 @@
 package report.models;
 
+import report.util.Util;
+
 public class User {
 
     /**
@@ -52,6 +54,11 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    // 获取用户组详细描述
+    public String getRoleDetial() {
+        return Util.convertRoleName(role);
     }
 
     public void setRole(String role) {

@@ -1,4 +1,7 @@
-<%--
+<%@ page import="report.proxy.UserProxy" %>
+<%@ page import="java.util.List" %>
+<%@ page import="report.models.User" %>
+<%@ page import="report.util.Util" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -48,11 +51,11 @@
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
                 <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
-                <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (session.getAttribute("uid") != null) {%>
-                <li><a href="#">用户组：<%= session.getAttribute("role") %></a></li>
+                <li><a href="#">用户组：<%= Util.convertRoleName(String.valueOf(session.getAttribute("role"))) %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <%= session.getAttribute("username") %> <span class="caret"></span>
@@ -72,7 +75,38 @@
 <div class="container">
     <div class="row">
         <div class="main">
-
+            <h3>用户列表</h3>
+            <div style="margin-bottom: 10px">
+                <a class="btn btn-default" href="/user_add.jsp" target="_blank">添加用户</a>
+            </div>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <td>id</td>
+                    <td>用户名</td>
+                    <td>邮箱</td>
+                    <td>角色</td>
+                    <td>用户所属片区</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    UserProxy userProxy = new UserProxy();
+                    List<User> userList = userProxy.getUserList();
+                    for (User user : userList) {
+                %>
+                <tr>
+                    <td><%= user.getId() %></td>
+                    <td><%= user.getUsername() %></td>
+                    <td><%= user.getEmail() %></td>
+                    <td><%= user.getRoleDetial() %></td>
+                    <td><%= user.getArea() %></td>
+                    <td><a href="#" class="btn btn-primary">编辑</a> <a href="#" class="btn btn-danger">删除</a></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

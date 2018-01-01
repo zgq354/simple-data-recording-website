@@ -1,6 +1,7 @@
 <%@ page import="report.proxy.DataProxy" %>
 <%@ page import="java.util.List" %>
-<%@ page import="report.models.Data" %><%--
+<%@ page import="report.models.Data" %>
+<%@ page import="report.util.Util" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -48,13 +49,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
                 <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
                 <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (session.getAttribute("uid") != null) {%>
-                <li><a href="#">用户组：<%= session.getAttribute("role") %></a></li>
+                <li><a href="#">用户组：<%= Util.convertRoleName(String.valueOf(session.getAttribute("role"))) %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <%= session.getAttribute("username") %> <span class="caret"></span>
@@ -94,7 +95,7 @@
             <%
                 List<Data> dataList = dataProxy.getDataListByDate(request.getParameter("date") == null ? "2017-12" : request.getParameter("date"));
             %>
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                 <tr>
                     <td>id</td>

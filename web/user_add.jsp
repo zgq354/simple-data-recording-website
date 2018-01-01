@@ -1,4 +1,5 @@
-<%--
+<%@ page import="report.util.Util" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
@@ -52,7 +53,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (session.getAttribute("uid") != null) {%>
-                <li><a href="#">用户组：<%= session.getAttribute("role") %></a></li>
+                <li><a href="#">用户组：<%= Util.convertRoleName(String.valueOf(session.getAttribute("role"))) %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <%= session.getAttribute("username") %> <span class="caret"></span>

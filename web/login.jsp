@@ -1,10 +1,11 @@
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
   Time: 下午3:04
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -35,7 +36,7 @@
 <div class="container">
     <div class="row">
         <div class="account">
-            <h3>登录统计数据后台</h3>
+            <h3>登录数据统计系统后台</h3>
             <%
                 List<String> stringList = (List<String>) session.getAttribute("info");
                 if (stringList != null) {

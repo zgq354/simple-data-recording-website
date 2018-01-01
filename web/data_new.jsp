@@ -8,13 +8,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="report.proxy.TemplateProxy" %>
 <%@ page import="report.models.Template" %>
+<%@ page import="report.proxy.DataProxy" %>
+<%@ page import="report.util.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>录入本月的数据</title>
+    <title>录入数据 - 数据统计系统</title>
     <link rel="stylesheet" href="vendor/bootstrap-3.3.7/css/bootstrap.min.css">
     <style>
         body {
@@ -32,6 +34,7 @@
     </style>
 </head>
 <body>
+<%-- 导航条 --%>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -42,23 +45,39 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">数据统计系统</a>
+            <a class="navbar-brand" href="/">数据统计系统</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">数据 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">指标</a></li>
-                <li><a href="#">用户</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
+                <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
+                <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <% if (session.getAttribute("uid") != null) {%>
+                <li><a href="#">用户组：<%= Util.convertRoleName(String.valueOf(session.getAttribute("role"))) %></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <%= session.getAttribute("username") %> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="${pageContext.request.contextPath}/servlet/LogoutServlet">退出登录</a></li>
+                    </ul>
+                </li>
+                <% } else { %>
+                <li><a href="${pageContext.request.contextPath}/login.jsp">登录</a></li>
+                <% } %>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<%--结束导航条--%>
 <div class="container">
     <div class="row">
         <div class="main">
-            <h3>录入本月的数据</h3>
+            <h3>录入数据</h3>
             <%
                 List<String> stringList = (List<String>) session.getAttribute("info");
                 if (stringList != null) {
@@ -72,32 +91,61 @@
                     }
                 }
             %>
-            <%
-                // 获取所有的条目列表
-                TemplateProxy templateProxy = new TemplateProxy();
-                List<Template> templates = templateProxy.getTemplatesList();
-            %>
             <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
-                <% for (Template template : templates) {%>
-                <div class="row">
-                    <h4><%= template.getFieldName() %></h4>
-                    <div style="margin-left: 4rem;">
-                        <div class="form-group">
-                            <label for="current-<%= template.getId() %>" class="control-label">本期实际</label>
-                            <input type="text" class="form-control" id="current-<%= template.getId() %>" name="inputEmail1" placeholder="本期实际">
-                        </div>
-                        <div class="form-group">
-                            <label for="last-<%= template.getId() %>" class="control-label">去年同期</label>
-                            <input type="text" class="form-control" id="last-<%= template.getId() %>" name="inputEmail2" placeholder="去年同期">
-                        </div>
-                        <div class="form-group">
-                            <label for="yearonyear-<%= template.getId() %>" class="control-label">同比</label>
-                            <input type="text" class="form-control" id="yearonyear-<%= template.getId() %>" name="yearonyear-<%= template.getId() %>" placeholder="同比">
-                        </div>
-                    </div>
-
+                <div class="form-group">
+                    <%--@declare id="date"--%><label for="date" class="control-label">录入数据的月份</label>
+                    <select class="form-control" name="date">
+                        <%
+                            DataProxy dataProxy = new DataProxy();
+                            List<String> dateList = dataProxy.getDateList();
+                            for (String string : dateList) {
+                        %>
+                        <option><%= string %></option>
+                        <% } %>
+                    </select>
                 </div>
-                <% } %>
+                <div class="form-group">
+                    <%-- 注意，以后要加上权限，限制各个部门只能录入和修改自己片区的信息 --%>
+                    <%--@declare id="area"--%><label for="area" class="control-label">数据所属片区</label>
+                    <select class="form-control" name="area">
+                        <%
+                            List<String> areaList = dataProxy.getAreaList();
+                            for (String string : areaList) {
+                        %>
+                        <option><%= string %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <%--@declare id="template"--%><label for="template" class="control-label">指标</label>
+                    <select class="form-control" name="template">
+                        <%
+                            // 获取所有的条目列表
+                            TemplateProxy templateProxy = new TemplateProxy();
+                            List<Template> templates = templateProxy.getTemplatesList();
+                            for (Template template : templates) {
+                        %>
+                        <option value="<%= template.getId() %>"><%= template.getFieldName() + "（" + template.getUnit() + "）" %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="current" class="control-label">本期实际</label>
+                    <input type="text" class="form-control" id="current" name="inputEmail1" placeholder="本期实际">
+                </div>
+                <div class="form-group">
+                    <label for="last" class="control-label">去年同期</label>
+                    <input type="text" class="form-control" id="last" name="inputEmail2" placeholder="去年同期">
+                </div>
+                <div class="form-group">
+                    <label for="yearonyear" class="control-label">同比</label>
+                    <input type="text" class="form-control" id="yearonyear" name="yearonyear" placeholder="同比">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="continue"> 提交本条记录后继续录入
+                    </label>
+                </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-default">提交</button>
                 </div>
@@ -112,6 +160,7 @@
     </div>
 </div>
 </body>
+<script src="${pageContext.request.contextPath}/vendor/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendor/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </html>
-
 <% session.removeAttribute("info"); %>

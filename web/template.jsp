@@ -8,13 +8,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="report.proxy.TemplateProxy" %>
 <%@ page import="report.models.Template" %>
+<%@ page import="report.util.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>数据模板 - 数据统计系统</title>
+    <title>指标列表 - 数据统计系统</title>
     <link rel="stylesheet" href="/vendor/bootstrap-3.3.7/css/bootstrap.min.css">
     <style>
         body {
@@ -55,7 +56,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (session.getAttribute("uid") != null) {%>
-                <li><a href="#">用户组：<%= session.getAttribute("role") %></a></li>
+                <li><a href="#">用户组：<%= Util.convertRoleName(String.valueOf(session.getAttribute("role"))) %></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                          <%= session.getAttribute("username") %> <span class="caret"></span>
@@ -94,7 +95,7 @@
                 TemplateProxy templateProxy = new TemplateProxy();
                 List<Template> templates = templateProxy.getTemplatesList();
             %>
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                     <tr>
                         <td>id</td>
@@ -116,7 +117,7 @@
                 </tbody>
                 <% } %>
             </table>
-            <a href="#" class="btn btn-primary">增加指标</a>
+            <a href="/template_add.jsp" class="btn btn-primary">新建指标</a>
         </div>
     </div>
 </div>
