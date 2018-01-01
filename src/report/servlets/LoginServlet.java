@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("role", result.getRole());
 
             // 登陆成功后的跳转
-            response.sendRedirect("/index.jsp");
+            response.sendRedirect("/data.jsp");
             return;
         } catch (TipException e) {
             // 登录时的错误提示，通过 TipException 错误捕捉

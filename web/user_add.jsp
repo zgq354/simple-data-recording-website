@@ -9,6 +9,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (request.getSession().getAttribute("uid") == null) {
+        response.sendRedirect("/login.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -89,7 +95,7 @@
                     }
                 }
             %>
-            <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
+            <form method="post" action="${pageContext.request.contextPath}/servlet/UserAddServlet">
                 <div class="form-group">
                     <label for="username" class="control-label">用户名</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
@@ -114,8 +120,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <%--@declare id="parent"--%><label for="parent" class="control-label">用户归属片区</label>
-                    <select class="form-control" name="parent">
+                    <%--@declare id="area"--%><label for="area" class="control-label">用户归属片区</label>
+                    <select class="form-control" name="area">
                         <option value="0">无</option>
                         <%
                         // 获取所有的条目列表

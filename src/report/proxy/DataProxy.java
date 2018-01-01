@@ -78,12 +78,7 @@ public class DataProxy extends BaseProxy {
         // 结果按照模板排序，data表有冗余
         String sql = "SELECT * FROM `data` " +
                 "WHERE `date` = ? " +
-                "ORDER BY `sort` DESC";
-//        String sql = "SELECT `data`.* FROM `data` " +
-//                "WHERE date = ? " +
-//                "LEFT JOIN `template` " +
-//                "ON `data`.template = `template`.id " +
-//                "ORDER BY `template`.sort ASC";
+                "ORDER BY `area` ASC, `sort` DESC";
         ResultSet rs = DB.executeQuery(sql, new Object[]{date});
         List<Data> result = new ArrayList<Data>();
         while (rs.next()) {

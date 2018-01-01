@@ -10,6 +10,12 @@
 <%@ page import="report.models.Template" %>
 <%@ page import="report.util.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (request.getSession().getAttribute("uid") == null) {
+        response.sendRedirect("/login.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">

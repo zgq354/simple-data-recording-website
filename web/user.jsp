@@ -9,6 +9,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (request.getSession().getAttribute("uid") == null) {
+        response.sendRedirect("/login.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">

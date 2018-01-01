@@ -18,6 +18,10 @@
         <servlet-name>DataAddServlet</servlet-name>
         <servlet-class>report.servlets.DataAddServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserAddServlet</servlet-name>
+        <servlet-class>report.servlets.UserAddServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/servlet/LoginServlet</url-pattern>
@@ -29,5 +33,9 @@
     <servlet-mapping>
         <servlet-name>DataAddServlet</servlet-name>
         <url-pattern>/servlet/DataAddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserAddServlet</servlet-name>
+        <url-pattern>/servlet/UserAddServlet</url-pattern>
     </servlet-mapping>
 </web-app>

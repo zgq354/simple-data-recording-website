@@ -99,7 +99,6 @@ public class DataAddServlet extends HttpServlet {
         }
 
         request.getSession().setAttribute("info", info);
-        // 跳转回登录页面
         response.sendRedirect("/data_new.jsp");
     }
 
