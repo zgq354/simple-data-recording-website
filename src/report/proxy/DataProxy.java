@@ -77,8 +77,8 @@ public class DataProxy extends BaseProxy {
     public List<Data> getDataListByDate(String date) throws SQLException {
         // 结果按照模板排序，data表有冗余
         String sql = "SELECT * FROM `data` " +
-                "WHERE date = ? " +
-                "ORDER BY `sort` ASC";
+                "WHERE `date` = ? " +
+                "ORDER BY `sort` DESC";
 //        String sql = "SELECT `data`.* FROM `data` " +
 //                "WHERE date = ? " +
 //                "LEFT JOIN `template` " +
@@ -88,7 +88,7 @@ public class DataProxy extends BaseProxy {
         List<Data> result = new ArrayList<Data>();
         while (rs.next()) {
             Data data = new Data();
-            data.setId(rs.getInt(date));
+            data.setId(rs.getInt("id"));
             data.setTemplate(rs.getInt("template"));
             data.setFieldName(rs.getString("field_name"));
             data.setUnit(rs.getString("unit"));
@@ -119,11 +119,6 @@ public class DataProxy extends BaseProxy {
                 "WHERE date = ? " +
                 "AND area = ? " +
                 "ORDER BY `sort` ASC";
-//        String sql = "SELECT `data`.* FROM `data` " +
-//                "WHERE date = ? " +
-//                "LEFT JOIN `template` " +
-//                "ON `data`.template = `template`.id " +
-//                "ORDER BY `template`.sort ASC";
         ResultSet rs = DB.executeQuery(sql, new Object[]{date, area});
         List<Data> result = new ArrayList<Data>();
         while (rs.next()) {
@@ -158,7 +153,7 @@ public class DataProxy extends BaseProxy {
         // 开始插入
         String sql = "INSERT INTO `data` " +
                 "(`id`, `template`, `field_name`, `unit`, `parent`, `format`, `sort`, `area`, `current`, `last_year`, `year-on-year`, `date`, `created`)" +
-                "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return DB.executeUpdate(sql, new Object[]{
                 data.getTemplate(),
                 data.getFieldName(),

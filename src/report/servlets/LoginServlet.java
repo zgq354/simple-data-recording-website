@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             // 其他错误，在控制台打印
             e.printStackTrace();
+            info.add("未知错误");
         }
         request.getSession().setAttribute("info", info);
         // 跳转回登录页面

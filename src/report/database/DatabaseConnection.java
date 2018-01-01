@@ -8,7 +8,7 @@ public class DatabaseConnection {
     // 数据库驱动程序
     private static final String DBDRIVER = "com.mysql.jdbc.Driver";
     // 数据库连接地址
-    private static final String DBURL = "jdbc:mysql://localhost:3306/report";
+    private static final String DBURL = "jdbc:mysql://localhost:3306/report?characterEncoding=utf-8";
     private static final String DBUSER = "root";
     private static final String DBPASS = "root";
     // 连接实例

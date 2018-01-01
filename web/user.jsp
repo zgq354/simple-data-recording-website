@@ -77,7 +77,7 @@
         <div class="main">
             <h3>用户列表</h3>
             <div style="margin-bottom: 10px">
-                <a class="btn btn-default" href="/user_add.jsp" target="_blank">添加用户</a>
+                <a class="btn btn-default" href="/user_add.jsp">添加用户</a>
             </div>
             <table class="table text-center">
                 <thead>

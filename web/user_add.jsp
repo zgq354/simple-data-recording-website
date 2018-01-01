@@ -1,11 +1,13 @@
-<%@ page import="report.util.Util" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: qing
   Date: 17-12-30
   Time: 下午5:51
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="report.util.Util" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -49,7 +51,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/data.jsp">数据 <span class="sr-only">(current)</span></a></li>
                 <li><a href="${pageContext.request.contextPath}/template.jsp">指标</a></li>
-                <li><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/user.jsp">用户</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (session.getAttribute("uid") != null) {%>
@@ -73,7 +75,60 @@
 <div class="container">
     <div class="row">
         <div class="main">
-
+            <h3>新建用户</h3>
+            <%
+                List<String> stringList = (List<String>) session.getAttribute("info");
+                if (stringList != null) {
+                    for (String str : stringList) {
+            %>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= str %>
+            </div>
+            <%
+                    }
+                }
+            %>
+            <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
+                <div class="form-group">
+                    <label for="username" class="control-label">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="control-label">邮箱</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">密码</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <%--@declare id="role"--%><label for="role" class="control-label">用户组</label>
+                    <select class="form-control" name="role">
+                        <%
+                        // 获取所有的条目列表
+                        for (Map.Entry<String, String> entry : Util.getRoleList().entrySet()) {
+                        %>
+                        <option value="<%= entry.getKey() %>"><%= entry.getValue() %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <%--@declare id="parent"--%><label for="parent" class="control-label">用户归属片区</label>
+                    <select class="form-control" name="parent">
+                        <option value="0">无</option>
+                        <%
+                        // 获取所有的条目列表
+                        for (String area : Util.getAreaList()) {
+                        %>
+                        <option><%= area %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">提交</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

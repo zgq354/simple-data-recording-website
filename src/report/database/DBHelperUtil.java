@@ -54,6 +54,12 @@ public class DBHelperUtil {
         ResultSet rs = null;
         manager.setPrepareStatementParams(sql, params);
         rs = pstm.executeQuery();
+        // debug
+        if (pstm instanceof com.mysql.jdbc.PreparedStatement) {
+            com.mysql.jdbc.PreparedStatement msqlPstmt = (com.mysql.jdbc.PreparedStatement)pstm;
+            String sqla = msqlPstmt.toString();
+            System.out.println(sqla);
+        }
         return rs;
     }
 

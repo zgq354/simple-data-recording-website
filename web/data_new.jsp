@@ -91,7 +91,7 @@
                     }
                 }
             %>
-            <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
+            <form method="post" action="${pageContext.request.contextPath}/servlet/DataAddServlet">
                 <div class="form-group">
                     <%--@declare id="date"--%><label for="date" class="control-label">录入数据的月份</label>
                     <select class="form-control" name="date">
@@ -131,19 +131,19 @@
                 </div>
                 <div class="form-group">
                     <label for="current" class="control-label">本期实际</label>
-                    <input type="text" class="form-control" id="current" name="inputEmail1" placeholder="本期实际">
+                    <input type="text" class="form-control" id="current" name="current" placeholder="本期实际">
                 </div>
                 <div class="form-group">
                     <label for="last" class="control-label">去年同期</label>
-                    <input type="text" class="form-control" id="last" name="inputEmail2" placeholder="去年同期">
+                    <input type="text" class="form-control" id="last" name="last" placeholder="去年同期">
                 </div>
                 <div class="form-group">
-                    <label for="yearonyear" class="control-label">同比</label>
+                    <label for="yearonyear" class="control-label">同比(%)</label>
                     <input type="text" class="form-control" id="yearonyear" name="yearonyear" placeholder="同比">
                 </div>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="continue"> 提交本条记录后继续录入
+                        <input type="checkbox" name="continue" <% if (session.getAttribute("continued") != null && (boolean)session.getAttribute("continued")) out.print("checked"); %>> 提交本条记录后继续录入
                     </label>
                 </div>
                 <div class="form-group">
@@ -162,5 +162,12 @@
 </body>
 <script src="${pageContext.request.contextPath}/vendor/jquery-3.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendor/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script>
+    function calculate() {
+        $("#yearonyear").val(Math.round(($("#current").val() / $("#last").val()) * 10000 - 10000) / 100);
+    }
+    $("#current").on('change', calculate);
+    $("#last").on('change', calculate);
+</script>
 </html>
 <% session.removeAttribute("info"); %>

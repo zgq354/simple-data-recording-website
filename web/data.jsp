@@ -89,8 +89,8 @@
                     <li><a href="data.jsp?date=<%= string %>"><%= string %></a></li>
                     <% } %>
                 </ul>
-                <a class="btn btn-default" href="/data_new.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>" target="_blank">录入数据</a>
-                <a class="btn btn-success" href="/data_report.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>" target="_blank">生成本月报表</a>
+                <a class="btn btn-default" href="/data_new.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>">录入数据</a>
+                <a class="btn btn-success" href="/data_report.jsp?date=<%= request.getParameter("date") == null ? "2017-12" : request.getParameter("date") %>" target="_blank">生成报表</a>
             </div>
             <%
                 List<Data> dataList = dataProxy.getDataListByDate(request.getParameter("date") == null ? "2017-12" : request.getParameter("date"));
