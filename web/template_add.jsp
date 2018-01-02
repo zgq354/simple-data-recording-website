@@ -103,7 +103,7 @@
             %>
             <%-- End 全局消息提示 --%>
 
-            <form method="post" action="${pageContext.request.contextPath}/servlet/LoginServlet">
+            <form method="post" action="${pageContext.request.contextPath}/servlet/TemplateAddServlet">
                 <div class="form-group">
                     <label for="field_name" class="control-label">指标名称</label>
                     <input type="text" class="form-control" id="field_name" name="field_name" placeholder="指标名称">

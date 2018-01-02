@@ -68,6 +68,12 @@ public class DBHelperUtil {
         // 执行无返回数据的数据查询，返回值是被改变的书库的数据库项数
         manager.setPrepareStatementParams(sql, params); // 填充参数
         pstm.executeUpdate(); // 执行更新
+        // debug
+        if (pstm instanceof com.mysql.jdbc.PreparedStatement) {
+            com.mysql.jdbc.PreparedStatement msqlPstmt = (com.mysql.jdbc.PreparedStatement)pstm;
+            String sqla = msqlPstmt.toString();
+            System.out.println(sqla);
+        }
 //        manager.commitChange();
         return true;
     }

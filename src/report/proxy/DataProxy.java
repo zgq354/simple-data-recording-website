@@ -45,6 +45,35 @@ public class DataProxy extends BaseProxy {
     }
 
     /**
+     * 通过模板ID和日期获取数据
+     * @param templateId 指标id
+     * @param date 月份
+     * @return 查询数据
+     * @throws SQLException sql异常
+     */
+    public Data getDataByTemplateAndDate(String templateId, String area, String date) throws SQLException {
+        String sql = "SELECT * FROM `data` WHERE `template` = ? AND `date` = ? AND `area` = ?";
+        ResultSet rs = DB.executeQuery(sql, new Object[]{templateId, date, area});
+        if (rs.next()) {
+            Data data = new Data();
+            data.setId(Integer.parseInt(templateId));
+            data.setTemplate(rs.getInt("template"));
+            data.setFieldName(rs.getString("field_name"));
+            data.setUnit(rs.getString("unit"));
+            data.setParent(rs.getInt("parent"));
+            data.setFormat(rs.getInt("format"));
+            data.setArea(rs.getString("area"));
+            data.setCurrent(rs.getDouble("current"));
+            data.setLastYear(rs.getDouble("last_year"));
+            data.setYearonyear(rs.getDouble("year-on-year"));
+            data.setDate(rs.getString("date"));
+            return data;
+        }
+
+        return null;
+    }
+
+    /**
      * 临时获取一个日期列表
      * @return 日期列表
      */

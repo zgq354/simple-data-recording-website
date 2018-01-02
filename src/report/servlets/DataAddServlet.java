@@ -24,6 +24,9 @@ public class DataAddServlet extends HttpServlet {
             return;
         }
 
+        // 避免中文乱码
+        request.setCharacterEncoding("UTF-8");
+
         // 提取请求参数
         String date = request.getParameter("date");
         String area = request.getParameter("area");
@@ -63,6 +66,10 @@ public class DataAddServlet extends HttpServlet {
         // 开始业务逻辑
         //
         try {
+            DataProxy dataProxy = new DataProxy();
+            // 判断是否已经存在数据
+            if (dataProxy.getDataByTemplateAndDate(template, area, date) != null)
+                throw new TipException("当前录入的指标已存在数据，不能再添加");
             // 首先获取模板中的内容
             TemplateProxy templateProxy = new TemplateProxy();
             Template templateById = templateProxy.getTemplateById(template);
@@ -84,7 +91,6 @@ public class DataAddServlet extends HttpServlet {
             data.setYearonyear(yearOnYear);
 
             // 插入数据
-            DataProxy dataProxy = new DataProxy();
             dataProxy.insertData(data);
 
             // 后续事情
@@ -93,6 +99,8 @@ public class DataAddServlet extends HttpServlet {
             request.getSession().setAttribute("continued", continued != null);
             response.sendRedirect(continued == null ? "/data.jsp" : "/data_new.jsp");
             return;
+        } catch (TipException e) {
+            info.add(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             info.add("未知错误");

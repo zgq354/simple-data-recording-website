@@ -71,7 +71,7 @@ public class TemplateProxy extends BaseProxy {
     public boolean createTemplate(Template template) throws SQLException {
         String sql = "INSERT INTO `template`" +
                 "(`id`, `field_name`, `unit`, `parent`, `format`, `sort`)" +
-                "VALUES (NULL, ?, ?, ?, ?, ?, ?)";
+                "VALUES (NULL, ?, ?, ?, ?, ?)";
         return DB.executeUpdate(sql, new Object[]{
                 template.getFieldName(),
                 template.getUnit(),

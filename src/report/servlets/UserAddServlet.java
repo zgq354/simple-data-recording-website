@@ -23,6 +23,9 @@ public class UserAddServlet extends HttpServlet {
             return;
         }
 
+        // 避免中文乱码
+        request.setCharacterEncoding("UTF-8");
+
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
