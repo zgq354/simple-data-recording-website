@@ -84,7 +84,7 @@
                     // 每行代表每个指标的所有数据
                     TableRow row = dataTable.get(data.getTemplate());
                     if (row == null) {
-                        row = new TableRow(data.getFieldName(), data.getUnit());
+                        row = new TableRow(data.getFieldName(), data.getUnit(), data.getFormat());
                     }
                     // 给行增加片区数据
                     row.setArea(data.getArea(), data.getCurrent(), data.getLastYear(), data.getYearonyear());
@@ -132,7 +132,7 @@
                     TableRow row = dataTable.get(key);
                 %>
                     <tr>
-                        <td><%= row.getFieldName() %></td>
+                        <td><%= row.getFormat() == 1 ? "<b>" + row.getFieldName() + "</b>" : row.getFieldName() %></td>
                         <td><%= row.getUnit() %></td>
                         <%-- 每组数据三个单元格 --%>
                         <% for (String area : areaList) { %>

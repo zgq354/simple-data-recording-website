@@ -133,7 +133,7 @@
                     <tr>
                         <td><%= data.getId() %></td>
                         <td><%= data.getArea() %></td>
-                        <td><%= data.getFieldName() %></td>
+                        <td><%= data.getFormat() == 1 ? "<b>" + data.getFieldName() + "</b>" : data.getFieldName() %></td>
                         <td><%= data.getUnit() %></td>
                         <td><%= data.getCurrent() %></td>
                         <td><%= data.getLastYear() %></td>

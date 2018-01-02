@@ -35,7 +35,7 @@
         }
 
         .main {
-            /*max-width: 500px;*/
+            max-width: 500px;
         }
 
         .footer-bottom {

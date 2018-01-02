@@ -59,10 +59,10 @@ public class Template {
     }
 
     public int getSort() {
-        return format;
+        return sort;
     }
 
-    public void setSort(int format) {
-        this.format = format;
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 }

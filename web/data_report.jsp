@@ -32,6 +32,14 @@
             /*max-width: 500px;*/
         }
 
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        .table > thead > tr > td {
+            vertical-align: middle;
+        }
+
         .footer-bottom {
             margin-top: 100px;
             padding: 18px;
@@ -114,7 +122,7 @@
                     // 每行代表每个指标的所有数据
                     TableRow row = dataTable.get(data.getTemplate());
                     if (row == null) {
-                        row = new TableRow(data.getFieldName(), data.getUnit());
+                        row = new TableRow(data.getFieldName(), data.getUnit(), data.getFormat());
                     }
                     // 给行增加片区数据
                     row.setArea(data.getArea(), data.getCurrent(), data.getLastYear(), data.getYearonyear());
@@ -122,7 +130,7 @@
                     dataTable.put(data.getTemplate(), row);
                 }
             %>
-            <table class="table">
+            <table class="table table-bordered text-center">
                 <thead>
                     <tr>
                         <td rowspan="2">指标名称</td>
@@ -154,7 +162,7 @@
                     TableRow row = dataTable.get(key);
                 %>
                     <tr>
-                        <td><%= row.getFieldName() %></td>
+                        <td><%= row.getFormat() == 1 ? "<b>" + row.getFieldName() + "</b>" : row.getFieldName() %></td>
                         <td><%= row.getUnit() %></td>
                         <%-- 每组数据三个单元格 --%>
                         <% for (String area : areaList) { %>

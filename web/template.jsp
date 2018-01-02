@@ -115,7 +115,7 @@
                 <% for (Template template : templates) {%>
                     <tr>
                         <td><%= template.getId() %></td>
-                        <td><%= template.getFieldName() %></td>
+                        <td><%= template.getFormat() == 1 ? "<b>" + template.getFieldName() + "</b>" : template.getFieldName() %></td>
                         <td><%= template.getUnit() %></td>
                         <td><%= template.getParent() %></td>
                         <td><a href="#" class="btn btn-primary">编辑</a> <a href="#" class="btn btn-danger">删除</a></td>

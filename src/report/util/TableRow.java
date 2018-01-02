@@ -16,11 +16,15 @@ public class TableRow {
     // 默认有3个指标
     private HashMap<String, HashMap<String, Double>> dataMap;
 
+    // 行格式
+    private int format;
+
     // 构造函数
-    public TableRow(String fieldName, String unit) {
+    public TableRow(String fieldName, String unit, int format) {
         dataMap = new HashMap<>();
         this.fieldName = fieldName;
         this.unit = unit;
+        this.format = format;
     }
 
     /**
@@ -46,6 +50,11 @@ public class TableRow {
      */
     public HashMap<String, Double> getArea(String area) {
         return dataMap.get(area);
+    }
+
+    // 获取行格式
+    public int getFormat() {
+        return format;
     }
 
     // 获取本期实际
