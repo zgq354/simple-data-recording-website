@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: qing
-  Date: 18-1-1
-  Time: 上午12:57
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="java.util.List" %>
 <%@ page import="report.proxy.TemplateProxy" %>
 <%@ page import="report.models.Template" %>

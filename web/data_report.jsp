@@ -4,13 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="report.proxy.DataProxy" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="report.util.TableRow" %><%--
-  Created by IntelliJ IDEA.
-  User: qing
-  Date: 17-12-30
-  Time: 下午5:51
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="report.util.TableRow" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (request.getSession().getAttribute("uid") == null) {
