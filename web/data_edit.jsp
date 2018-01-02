@@ -17,6 +17,16 @@
         response.sendRedirect("/login.jsp");
         return;
     }
+
+    // 判断用户是否有权限修改数据
+    if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role")) && !"manager".equals(request.getSession().getAttribute("role"))) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您无权修改数据");
+        session.setAttribute("info", info);
+        response.sendRedirect("/error.jsp");
+        return;
+    }
 %>
 <html>
 <head>

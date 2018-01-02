@@ -3,8 +3,10 @@ package report.servlets;
 import report.exception.TipException;
 import report.models.Data;
 import report.models.Template;
+import report.models.User;
 import report.proxy.DataProxy;
 import report.proxy.TemplateProxy;
+import report.proxy.UserProxy;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,6 +68,19 @@ public class DataAddServlet extends HttpServlet {
         // 开始业务逻辑
         //
         try {
+            // 权限检测
+            // 非管理员和维护者的情况
+            if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role"))) {
+                // 普通单位人员无权添加数据
+                if ("department".equals(request.getSession().getAttribute("role"))) {
+                    throw new TipException("您无权添加数据");
+                }
+                // 片区管理员需要验证片区是否属于它
+                if (!area.equals(request.getSession().getAttribute("area"))) {
+                    throw new TipException("您无权添加当前片区的数据");
+                }
+            }
+            // 开始增加数据
             DataProxy dataProxy = new DataProxy();
             // 判断是否已经存在数据
             if (dataProxy.getDataByTemplateAndDate(template, area, date) != null)

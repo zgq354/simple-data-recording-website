@@ -1,6 +1,7 @@
 package report.servlets;
 
 import org.mindrot.BCrypt;
+import report.exception.TipException;
 import report.models.User;
 import report.proxy.UserProxy;
 
@@ -37,6 +38,11 @@ public class UserAddServlet extends HttpServlet {
         List<String> info = new ArrayList<String>();
 
         try {
+            // 权限验证
+            if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role"))) {
+                throw new TipException("您无权操作用户");
+            }
+            // 开始逻辑
             UserProxy userProxy = new UserProxy();
             User user = new User();
 
@@ -51,6 +57,8 @@ public class UserAddServlet extends HttpServlet {
             request.getSession().setAttribute("info", info);
             response.sendRedirect("/user.jsp");
             return;
+        } catch (TipException e) {
+            info.add(e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             info.add("数据库错误");

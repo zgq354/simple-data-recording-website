@@ -19,6 +19,15 @@
         response.sendRedirect("/login.jsp");
         return;
     }
+    // 判断用户是否权限设置指标
+    if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role"))) {
+        // 错误提示信息
+        List<String> info = new ArrayList<String>();
+        info.add("您无权设置指标");
+        session.setAttribute("info", info);
+        response.sendRedirect("/error.jsp");
+        return;
+    }
 %>
 <html>
 <head>

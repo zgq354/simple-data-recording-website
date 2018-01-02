@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("uid", result.getId());
             request.getSession().setAttribute("username", result.getUsername());
             request.getSession().setAttribute("role", result.getRole());
+            request.getSession().setAttribute("area", result.getArea());
 
             // 登陆成功后的提示与跳转
             info.add("欢迎回来，" + result.getUsername());

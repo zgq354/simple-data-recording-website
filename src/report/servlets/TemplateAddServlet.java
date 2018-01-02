@@ -1,5 +1,6 @@
 package report.servlets;
 
+import report.exception.TipException;
 import report.models.Template;
 import report.proxy.TemplateProxy;
 
@@ -64,6 +65,10 @@ public class TemplateAddServlet extends HttpServlet {
 
         // 开始业务逻辑
         try {
+            // 权限验证
+            if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role"))) {
+                throw new TipException("您无权添加指标");
+            }
             TemplateProxy templateProxy = new TemplateProxy();
             Template template = new Template();
             template.setFieldName(fieldName);
@@ -71,8 +76,6 @@ public class TemplateAddServlet extends HttpServlet {
             template.setFormat(format);
             template.setParent(parent);
             template.setSort(sort);
-
-            System.out.println(fieldName);
 
             templateProxy.createTemplate(template);
 
