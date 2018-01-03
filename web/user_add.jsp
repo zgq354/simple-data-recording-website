@@ -4,14 +4,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (request.getSession().getAttribute("uid") == null) {
-        // 错误提示信息
-        List<String> info = new ArrayList<String>();
-        info.add("您还没有登录或会话已过期，请登录后再试。");
-        session.setAttribute("info", info);
-        response.sendRedirect("/login.jsp");
-        return;
-    }
     // 判断用户是否权限添加删除用户
     if (!"accendant".equals(request.getSession().getAttribute("role")) && !"admin".equals(request.getSession().getAttribute("role"))) {
         // 错误提示信息
