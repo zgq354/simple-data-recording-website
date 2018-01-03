@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/web/data_print.jsp" value="file://$PROJECT_DIR$/web" />
         <entry key="file://$PROJECT_DIR$/web/template_add.jsp" value="file://$PROJECT_DIR$/web" />
+        <entry key="file://$PROJECT_DIR$/web/user_edit.jsp" value="file://$PROJECT_DIR$/web" />
       </map>
     </option>
   </component>
