@@ -135,6 +135,7 @@
                     <tr>
                         <td rowspan="2">指标名称</td>
                         <td rowspan="2">计量单位</td>
+                        <td colspan="3">合计</td>
                         <%
                             List<String> areaList = Util.getAreaList();
                             for (String area : areaList) {
@@ -145,6 +146,9 @@
                         %>
                     </tr>
                     <tr>
+                        <td>本期实际</td>
+                        <td>去年同期</td>
+                        <td>同比（%）</td>
                         <%-- 每个片区三个数据 --%>
                         <%
                             for (int i = 0; i < areaList.size(); i++) {
@@ -164,6 +168,9 @@
                     <tr>
                         <td><%= row.getFormat() == 1 ? "<b>" + row.getFieldName() + "</b>" : row.getFieldName() %></td>
                         <td><%= row.getUnit() %></td>
+                        <td><%= row.getCurrentSum() != null ? row.getCurrentSum() : "-" %></td>
+                        <td><%= row.getLastSum() != null ? row.getLastSum() : "-" %></td>
+                        <td><%= row.getYearOnYearSum() != null ? row.getYearOnYearSum() : "-" %></td>
                         <%-- 每组数据三个单元格 --%>
                         <% for (String area : areaList) { %>
                         <td><%= row.getCurrent(area) != null ? row.getCurrent(area) : "-" %></td>

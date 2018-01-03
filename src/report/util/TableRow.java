@@ -12,6 +12,11 @@ public class TableRow {
     // 计量单位
     private String unit;
 
+    // 合计
+    private Double currentSum;
+    private Double lastSum;
+    private Double yearOnYearSum;
+
     // 地区 - 指标对应哈希表
     // 默认有3个指标
     private HashMap<String, HashMap<String, Double>> dataMap;
@@ -78,6 +83,21 @@ public class TableRow {
         return data.get("yearOnYear");
     }
 
+    // 本期实际合计
+    public Double getCurrentSum() {
+        return currentSum;
+    }
+
+    // 去年同期合计
+    public Double getLastSum() {
+        return lastSum;
+    }
+
+    // 合计同比
+    public Double getYearOnYearSum() {
+        return yearOnYearSum;
+    }
+
     // 设置地区的数据
     public void setArea(String area, Double current, Double last, Double yearOnYear) {
         HashMap<String, Double> data = new HashMap<>();
@@ -86,5 +106,20 @@ public class TableRow {
         data.put("yearOnYear", yearOnYear);
 
         dataMap.put(area, data);
+
+        // 设置合计
+        this.currentSum = 0.0;
+        this.lastSum = 0.0;
+        this.yearOnYearSum = 0.0;
+        for (String key : dataMap.keySet()) {
+            HashMap<String, Double> row = dataMap.get(key);
+            if (row == null) continue;
+            this.currentSum += row.get("current");
+            this.lastSum += row.get("last");
+        }
+        // 计算同比
+        if (lastSum > 0) {
+            this.yearOnYearSum = (double) (Math.round((this.currentSum / this.lastSum) * 10000 - 10000) / 100);
+        }
     }
 }

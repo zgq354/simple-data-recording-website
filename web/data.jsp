@@ -30,6 +30,14 @@
             /*max-width: 500px;*/
         }
 
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        .table > thead > tr > td {
+            vertical-align: middle;
+        }
+
         .footer-bottom {
             margin-top: 100px;
             padding: 18px;

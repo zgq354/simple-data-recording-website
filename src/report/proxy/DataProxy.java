@@ -13,7 +13,7 @@ public class DataProxy extends BaseProxy {
     private DBHelperUtil DB = null;
 
     public DataProxy() throws Exception {
-        DB = DBHelperUtil.createInstance();
+        DB = getDBInstance();
     }
 
     /**

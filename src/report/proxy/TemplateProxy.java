@@ -12,7 +12,7 @@ public class TemplateProxy extends BaseProxy {
     private DBHelperUtil DB = null;
 
     public TemplateProxy() throws Exception {
-        DB = DBHelperUtil.createInstance();
+        DB = getDBInstance();
     }
 
     /**
